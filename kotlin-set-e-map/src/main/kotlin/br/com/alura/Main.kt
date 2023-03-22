@@ -14,7 +14,7 @@ fun main() {
         pedido.numero to pedido
     }
 
-    // Se o valor do mapa for o próprio objeto que você está percorrendo, o associateBy é mais adequado
+    // Se o valor do mapa for o próprio objeto que você esta percorrendo, o associateBy é mais adequado
     val pedidosMapeadosBy = pedidos.associateBy { pedido ->
         // Passamos a associação do map, a chave
         pedido.numero
@@ -29,7 +29,43 @@ fun main() {
         pedido.valor > 50
     }
     println(pedidosFreteGratis)
-    println(pedidosFreteGratis[Pedido(1, 20.0)])
+    println(pedidosFreteGratis[Pedido(numero = 1, valor = 20.0)])
+
+    /*
+    // Na busca de ter o boolean se o frete é gratis ou não, tivemos essa solução.
+    // Ela não funciona corretamente, pois a chave tem que ser única, então ele vai ter no máximo 2 elementos, os últimos.
+    val mapa: Map<Boolean, Pedido> =
+        pedidos.associateBy { pedido -> pedido.valor > 50 }
+    println(mapa)
+     */
+
+
+    // Agrupa todos os elementos que tenham uma mesma chave,
+    // sendo que os elementos serão o valor, em forma de lista
+    val pedidosFreteGratisAgrupados: Map<Boolean, List<Pedido>> =
+        pedidos.groupBy { pedido ->
+            pedido.valor > 50
+        }
+
+    println(pedidosFreteGratisAgrupados[true])
+
+    val nomes: List<String> = listOf(
+        "Alex",
+        "Fran",
+        "Gui",
+        "Ana",
+        "Paulo",
+        "Maria",
+        "Mario",
+        "Gisele"
+    )
+
+    val agenda: Map<Char, List<String>> = nomes.groupBy { nome ->
+        nome.first() // Devolve a primeira letra da string
+    }
+
+    println(agenda)
+    println(agenda['A'])
 }
 
 data class Pedido(val numero: Int, val valor: Double)
