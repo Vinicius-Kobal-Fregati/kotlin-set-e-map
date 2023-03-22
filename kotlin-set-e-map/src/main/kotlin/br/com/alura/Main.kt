@@ -67,4 +67,38 @@ fun main() {
     println(pedidosFiltrados)
     println(pedidosAcima)
     println(pedidosPares)
+
+    // Cria um map novo com a junção, sem alterar o original
+    println(pedidos + Pair(7, 90.0))
+    // Assim não funciona, precisa dos parêntesis
+    //println(pedidos + 7 to 90.0)
+    println(pedidos + (7 to 90.0))
+    println(pedidos + mapOf(7 to 90.0, 8 to 20.0))
+    println(pedidos)
+
+    // Cria um novo map sem essa chave
+    println(pedidos - 6)
+    // Remove as chaves que estão dentro da lista
+    println(pedidos - listOf(5, 6))
+    println(pedidos)
+
+    val pedidosMutaveis = pedidos.toMutableMap()
+    // Aceita qualquer iterable
+    pedidosMutaveis.putAll(setOf<Pair<Int, Double>>(7 to 90.0, 8 to 20.0, 8 to 30.0))
+    // Funciona igual ao putAll
+    pedidosMutaveis += (setOf<Pair<Int, Double>>(9 to 20.0))
+    println(pedidosMutaveis)
+
+    pedidosMutaveis.keys.remove(2)
+    println(pedidosMutaveis)
+
+    // Remove o primeiro que encontrar com esse valor
+    pedidosMutaveis.values.remove(50.0)
+    println(pedidosMutaveis)
+
+    pedidosMutaveis.values.remove(20.0)
+    println(pedidosMutaveis)
+
+    // Assim remove pela chave
+    pedidosMutaveis -= 6
 }
