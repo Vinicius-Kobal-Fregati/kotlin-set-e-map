@@ -2,15 +2,26 @@ package br.com.alura
 
 fun main() {
     val banco = BancoDeNomes()
+    /*
+    // Cópia por referência, precisamos evitar isso
+    // Não funciona ao usar o toList na property nomes
+    val nomesSalvos: MutableCollection<String> = banco.nomes
+            as MutableCollection<String>
+
+    nomesSalvos.add("Henrique")
+     */
+
+    val nomesSalvos: Collection<String> = banco.nomes
     // Quebraria o encapsulamento, alguém externo está alterando livremente o valor interno
     //BancoDeNomes.dados.add("Vinícius")
     banco.salva("Vinícius")
-    println(banco.nomes)
+    println(nomesSalvos)
     println(BancoDeNomes().nomes)
 }
 
 class BancoDeNomes {
-    val nomes: Collection<String> get() = dados
+    // Assim garante que não haverá cast para mutable, quebrando a segurança da lista
+    val nomes: Collection<String> get() = dados.toList()
 
     fun salva(nome: String) {
         dados.add(nome)
