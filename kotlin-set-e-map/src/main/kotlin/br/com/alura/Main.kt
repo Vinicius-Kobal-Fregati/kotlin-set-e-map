@@ -1,46 +1,40 @@
 package br.com.alura
 
 fun main() {
-    val assistiramCursoAndroid: List<String> = listOf("Alex", "Fran", "Gui", "Maria")
-    val assistiramCursoKotlin: List<String> = listOf("Alex", "Paulo", "Maria")
-    val assistiramAmbos:MutableList<String> = mutableListOf<String>()
-    val assistiramAmbosSoma: List<String> = assistiramCursoAndroid + assistiramCursoKotlin
-    assistiramAmbos.addAll(assistiramCursoAndroid)
-    assistiramAmbos.addAll(assistiramCursoKotlin)
-    // Distinct não mostra os valores repetidos
-    println(assistiramAmbos.distinct())
+    // O to é um infix do Pair, o mais comum é o to.
+    // O to tem alguns problemas de performance, para algo grande, é recomendado usar o Pair.
+    val pedidos: Map<Int, Double> = mapOf(Pair(1, 20.0), Pair(2, 34.0), 3 to 50.0)
+    println(pedidos)
+    // Pegamos os valores pela chave
+    val pedido: Double? = pedidos[1]
+    pedido?.let { println("Pedido $it") }
 
-    val assistiramCursoAndroid2: MutableSet<String> = mutableSetOf("Alex", "Fran", "Gui", "Maria")
-    val assistiramCursoKotlin2: MutableSet<String> = mutableSetOf("Alex", "Paulo", "Maria")
-    // O próprio set não aceita elementos repetidos
-    //val assistiramAmbosSet:Set<String> = assistiramCursoAndroid2 + assistiramCursoKotlin2
-    //println(assistiramAmbosSet)
+    // No for, temos o tipo como Map.Entry, ele possui a chave e valor do elemento.
+    for (p: Map.Entry<Int, Double> in pedidos) {
+        println("Número do pedido: ${p.key}, " +
+                "valor do pedido: ${p.value}")
+    }
 
-    val assistiramAmbosMutableSet: MutableSet<String> = mutableSetOf()
-    assistiramAmbosMutableSet.addAll(assistiramCursoAndroid2)
-    assistiramAmbosMutableSet.addAll(assistiramCursoKotlin2)
-    assistiramAmbosMutableSet.add("Gui")
-    assistiramAmbosMutableSet.add("Ana")
-    println(assistiramAmbosMutableSet)
+    val pedidosMutaveis: MutableMap<Int, Double> = pedidos.toMutableMap()
+    // A forma mais comum de se inserir é essa primeira, o put não é tanto assim.
+    pedidosMutaveis[4] = 70.0
+    println(pedidosMutaveis)
+    pedidosMutaveis.put(5, 80.0)
+    println(pedidosMutaveis)
+    // Dessa forma também podemos atualizar os valores das chaves
+    pedidosMutaveis[1] = 100.0
+    println(pedidosMutaveis)
 
-    println(assistiramCursoAndroid2 + assistiramCursoKotlin2)
-    // Comportamentos específicos do set
-    // Union tem a característica de infix no Kotlin, podemos chamar ele sem o ponto
-    println(assistiramCursoAndroid2.union(assistiramCursoKotlin2))
-    println(assistiramCursoAndroid2 union(assistiramCursoKotlin2))
-    // Para um argumento, não precisa dos parêntesis
-    println(assistiramCursoAndroid2 union assistiramCursoKotlin2)
+    // Adiciona apenas se a chave não existir
+    pedidosMutaveis.putIfAbsent(6, 120.0)
+    println(pedidosMutaveis)
+    // Não faz a adição pois a chave 6 já existe
+    pedidosMutaveis.putIfAbsent(6, 200.0)
+    println(pedidosMutaveis)
 
-    // Remove os iguais que aparecem na segunda coleção
-    println(assistiramCursoKotlin2 - assistiramCursoAndroid2)
-    println(assistiramCursoAndroid2 subtract  assistiramCursoKotlin2)
-
-    // Pega quem está nas duas coleções
-    println(assistiramCursoAndroid2 intersect assistiramCursoKotlin2)
-
-    val assistiramList: MutableList<String> = assistiramAmbosMutableSet.toMutableList()
-    assistiramList.add("Alex")
-    println(assistiramList)
-    // Ao transformar para set, já excluí os itens repetidos
-    println(assistiramList.toSet())
+    pedidosMutaveis.remove(6)
+    pedidosMutaveis.remove(3)
+    // Remove apenas se a chave e o valor corresponderem ao passado
+    pedidosMutaveis.remove(1, 110.0)
+    println(pedidosMutaveis)
 }
