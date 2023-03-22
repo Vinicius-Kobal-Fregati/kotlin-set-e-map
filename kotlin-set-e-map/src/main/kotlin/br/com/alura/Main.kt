@@ -1,66 +1,46 @@
 package br.com.alura
 
 fun main() {
-    val banco = BancoDeNomes()
-    /*
-    // Cópia por referência, precisamos evitar isso
-    // Não funciona ao usar o toList na property nomes
-    val nomesSalvos: MutableCollection<String> = banco.nomes
-            as MutableCollection<String>
+    val assistiramCursoAndroid: List<String> = listOf("Alex", "Fran", "Gui", "Maria")
+    val assistiramCursoKotlin: List<String> = listOf("Alex", "Paulo", "Maria")
+    val assistiramAmbos:MutableList<String> = mutableListOf<String>()
+    val assistiramAmbosSoma: List<String> = assistiramCursoAndroid + assistiramCursoKotlin
+    assistiramAmbos.addAll(assistiramCursoAndroid)
+    assistiramAmbos.addAll(assistiramCursoKotlin)
+    // Distinct não mostra os valores repetidos
+    println(assistiramAmbos.distinct())
 
-    nomesSalvos.add("Henrique")
-     */
+    val assistiramCursoAndroid2: MutableSet<String> = mutableSetOf("Alex", "Fran", "Gui", "Maria")
+    val assistiramCursoKotlin2: MutableSet<String> = mutableSetOf("Alex", "Paulo", "Maria")
+    // O próprio set não aceita elementos repetidos
+    //val assistiramAmbosSet:Set<String> = assistiramCursoAndroid2 + assistiramCursoKotlin2
+    //println(assistiramAmbosSet)
 
-    val nomesSalvos: Collection<String> = banco.nomes
-    // Quebraria o encapsulamento, alguém externo está alterando livremente o valor interno
-    //BancoDeNomes.dados.add("Vinícius")
-    banco.salva("Vinícius")
-    println(nomesSalvos)
-    println(BancoDeNomes().nomes)
-}
+    val assistiramAmbosMutableSet: MutableSet<String> = mutableSetOf()
+    assistiramAmbosMutableSet.addAll(assistiramCursoAndroid2)
+    assistiramAmbosMutableSet.addAll(assistiramCursoKotlin2)
+    assistiramAmbosMutableSet.add("Gui")
+    assistiramAmbosMutableSet.add("Ana")
+    println(assistiramAmbosMutableSet)
 
-class BancoDeNomes {
-    // Assim garante que não haverá cast para mutable, quebrando a segurança da lista
-    val nomes: Collection<String> get() = dados.toList()
+    println(assistiramCursoAndroid2 + assistiramCursoKotlin2)
+    // Comportamentos específicos do set
+    // Union tem a característica de infix no Kotlin, podemos chamar ele sem o ponto
+    println(assistiramCursoAndroid2.union(assistiramCursoKotlin2))
+    println(assistiramCursoAndroid2 union(assistiramCursoKotlin2))
+    // Para um argumento, não precisa dos parêntesis
+    println(assistiramCursoAndroid2 union assistiramCursoKotlin2)
 
-    fun salva(nome: String) {
-        dados.add(nome)
-    }
+    // Remove os iguais que aparecem na segunda coleção
+    println(assistiramCursoKotlin2 - assistiramCursoAndroid2)
+    println(assistiramCursoAndroid2 subtract  assistiramCursoKotlin2)
 
-    // Modo de manter o atributo estático no Kotlin
-    companion object {
-        private val dados = mutableListOf<String>()
-    }
-}
+    // Pega quem está nas duas coleções
+    println(assistiramCursoAndroid2 intersect assistiramCursoKotlin2)
 
-fun testaColecao() {
-    val nomes: Iterable<String> = setOf(
-        "Alex",
-        "Fran",
-        "Gui",
-        "Maria",
-        "Ana"
-    )
-
-    for (nome in nomes) {
-        println(nome)
-    }
-
-    println(nomes)
-    println("Tem o nome Vinícius? ${nomes.contains("Vinícius")}")
-
-    val nomesCollection: Collection<String> = setOf(
-        "Alex",
-        "Fran",
-        "Gui",
-        "Maria",
-        "Ana"
-    )
-
-    println("Tamanho da coleção ${nomesCollection.size}")
-
-    val nomesMutableCollection: MutableCollection<String> = nomes.toMutableList()
-    nomesMutableCollection.add("Paulo")
-    nomesMutableCollection.remove("Alex")
-    println(nomesMutableCollection)
+    val assistiramList: MutableList<String> = assistiramAmbosMutableSet.toMutableList()
+    assistiramList.add("Alex")
+    println(assistiramList)
+    // Ao transformar para set, já excluí os itens repetidos
+    println(assistiramList.toSet())
 }
