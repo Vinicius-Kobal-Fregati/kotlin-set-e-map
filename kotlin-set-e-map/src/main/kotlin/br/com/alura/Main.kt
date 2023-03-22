@@ -22,4 +22,25 @@ fun main() {
     assistiramAmbosMutableSet.add("Gui")
     assistiramAmbosMutableSet.add("Ana")
     println(assistiramAmbosMutableSet)
+
+    println(assistiramCursoAndroid2 + assistiramCursoKotlin2)
+    // Comportamentos específicos do set
+    // Union tem a característica de infix no Kotlin, podemos chamar ele sem o ponto
+    println(assistiramCursoAndroid2.union(assistiramCursoKotlin2))
+    println(assistiramCursoAndroid2 union(assistiramCursoKotlin2))
+    // Para um argumento, não precisa dos parêntesis
+    println(assistiramCursoAndroid2 union assistiramCursoKotlin2)
+
+    // Remove os iguais que aparecem na segunda coleção
+    println(assistiramCursoKotlin2 - assistiramCursoAndroid2)
+    println(assistiramCursoAndroid2 subtract  assistiramCursoKotlin2)
+
+    // Pega quem está nas duas coleções
+    println(assistiramCursoAndroid2 intersect assistiramCursoKotlin2)
+
+    val assistiramList: MutableList<String> = assistiramAmbosMutableSet.toMutableList()
+    assistiramList.add("Alex")
+    println(assistiramList)
+    // Ao transformar para set, já excluí os itens repetidos
+    println(assistiramList.toSet())
 }
