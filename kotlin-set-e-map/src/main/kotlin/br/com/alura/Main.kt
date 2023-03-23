@@ -66,6 +66,23 @@ fun main() {
 
     println(agenda)
     println(agenda['A'])
+
+    // Temos um Objeto do tipo Grouping, nele podemos usar fold, reduce e aggregate, além de outros métodos.
+    // O Grouping exige menos recurso de memória, ele é bom para quando precisamos realizar operações em cada grupo
+    // separado. Muito útil quando trabalhamos com muitos dados.
+    val pedidosAgrupados: Grouping<Pedido, Boolean> = pedidos.groupingBy { pedido ->
+        pedido.valor > 50.0
+    }
+    println(pedidosAgrupados.keyOf(Pedido(1, 20.0)))
+    println(pedidosAgrupados.eachCount())
+
+    // Devolve um map tendo como valor a somatória de todos os valores daquela chave
+    val somatoriaValores: Map<Boolean, Double> = pedidosAgrupados
+        .fold(0.0) { acumulador: Double, pedido: Pedido ->
+            acumulador + pedido.valor
+        }
+
+    println(somatoriaValores)
 }
 
 data class Pedido(val numero: Int, val valor: Double)
